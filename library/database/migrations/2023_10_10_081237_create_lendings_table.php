@@ -13,21 +13,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lendings', function (Blueprint $table) {
+            $table->date('start')->default(now());
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('copy_id')->references('copy_id')->on('copies');
-            //mai dátum év megfelelője
-            $table->date('start')->default(now());
-            $table->primary(['user_id', 'copy_id', 'start']);
+            $table->primary(['start', 'user_id', 'copy_id']);
+
             $table->timestamps();
         });
 
         Lending::create([
-            'user_id' => 2, 
+            'user_id' => 1,
             'copy_id' => 2,
         ]);
 
         Lending::create([
-            'user_id' => 2, 
+            'user_id' => 1,
             'copy_id' => 1,
         ]);
     }

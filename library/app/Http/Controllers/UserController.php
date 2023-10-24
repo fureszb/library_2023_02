@@ -19,25 +19,28 @@ class UserController extends Controller
 
     public function destroy($id){
         User::find($id)->delete();
-        
+        return redirect('/user/list');
     }
 
     public function update(Request $request, $id){
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = $request->password;
         $user->permission = $request->permission;
         $user->save();
-        
+        //még nem létezik...
+        return redirect('/user/list');
     }
 
     public function updatePassword(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "password" => array( 'required', 'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[^\s]{8,}$/')
-      ]);
-
+            "password" => array('required', 'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[^\s]{8,}$/')
+        ]);
+        /* $validator = Validator::make($request->all(), [
+            "password" => 'string|min:3|max:50'
+        ]); */
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->all()], 400);
         }
@@ -52,8 +55,22 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = $request->password;
         $user->permission = $request->permission;
         $user->save();
+        return redirect('/user/list');
+    }
+
+    
+    //view függvények
+    public function listView(){
+        $user = User::all();
+        return view('user.list', ['user' => $user]);
+    }
+
+    public function lendingUser(){
+        $lending = User::with('lending')->get();
+        return $lending;
+
     }
 }

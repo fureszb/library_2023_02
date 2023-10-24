@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            //0: könyvtáros, 1: felhasználó
             $table->boolean('permission')->default(1);
             $table->rememberToken();
             $table->timestamps();
@@ -27,14 +26,14 @@ return new class extends Migration
 
         User::create([
             'name' => "Könyvtáros", 
-            'email' => 'konyvtaros@gmail.com', 
-            'password' => Hash::make('Aa123@'),
+            'email' => 'valaki@gmail.com', 
+            'password' => Hash::make('St123456'),
             'permission' => 0
         ]);
 
         User::create([
             'name' => "Gizi", 
-            'email' => 'gizi@gmail.com', 
+            'email' => 'valami@gmail.com', 
             'password' => Hash::make('aa123')
         ]);
 

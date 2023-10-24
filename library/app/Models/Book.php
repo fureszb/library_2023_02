@@ -15,4 +15,9 @@ class Book extends Model
         'author',
         'title',
     ];
+
+    public function copy()
+    {
+        return $this->hasMany(Copy::class, 'book_id', 'book_id');
+    }
 }

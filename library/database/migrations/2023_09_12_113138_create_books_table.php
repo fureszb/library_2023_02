@@ -20,13 +20,13 @@ return new class extends Migration
         });
 
         Book::create([
-            'author' => "Franz Kafka", 
-            'title' => 'Átváltozás', 
+            'author' => "Valaki", 
+            'title' => 'valaki valahol', 
         ]);
 
         Book::create([
-            'author' => "Asimov", 
-            'title' => 'Alapítvány'
+            'author' => "Valakik", 
+            'title' => 'valakik valahol'
         ]);
     }
 

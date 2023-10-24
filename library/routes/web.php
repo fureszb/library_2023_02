@@ -32,10 +32,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::apiResource('/api/books', BookController::class);
 Route::apiResource('/api/copies', CopyController::class);
+Route::apiResource('/api/books', BookController::class);
 Route::apiResource('/api/users', UserController::class);
-Route::patch('/api/user_password/{id}', [UserController::class, 'updatePassword']);
-Route::delete('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'destroy']);
+
+Route::get('/api/lendings', [LendingController::class, 'index']);
+Route::get('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']);
+Route::post('/api/lendings', [LendingController::class, 'store']);
+
+Route::middleware( ['admin'])->group(function () {
+    Route::apiResource('
+    ', UserController::class);
+});
+Route::get('/with/copies',[BookController::class, 'bookCopy']);
+Route::get('/with/lending_user',[UserController::class, 'lendingUser']);
+Route::patch('/api/update_password', [UserController::class, 'updatePassword']);
+Route::patch('/api/password_modify/{id}', [UserController::class, 'updatePassword']);
 
 require __DIR__.'/auth.php';
